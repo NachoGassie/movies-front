@@ -1,0 +1,8 @@
+.pagBtn{
+  align-self: center;
+  width: 40%; 
+}
+.pagEndTxt{
+  color: var(--main-color);
+  align-self: center;
+}

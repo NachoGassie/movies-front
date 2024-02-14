@@ -1,0 +1,12 @@
+.sortContainer{
+  display: flex;
+  gap: 40px;
+}
+.sort{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.label{
+  color: var(--main-color);
+}

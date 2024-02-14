@@ -1,0 +1,42 @@
+.deleteCardContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.text {
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.titulo{
+  text-decoration: underline;
+}
+.btnContainer{
+  display: flex; 
+  align-self: center;
+  margin: auto;
+  margin-top: 20px;
+  gap: 20px;
+}
+.btn{
+  color: var(--pure-black);
+  min-width: 100px;
+  height: 40px;
+}
+
+.delete{
+  background-color: var(--main-red);
+}
+.delete:hover{
+  background-color: var(--main-red-dark);
+}
+
+.cancel{
+  background-color: var(--main-color);
+}
+
+.cancel:hover{
+  background-color: var(--main-color-dark);
+}

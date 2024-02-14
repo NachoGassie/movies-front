@@ -1,0 +1,68 @@
+.header{
+    width: 90%;
+    max-height: 200px;
+    padding: 5px 15px;
+    border-bottom: 1px solid var(--main-color);
+}
+.headerList{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    color: var(--main-color);
+}
+.burger, .closeBurger{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.closeBurger{
+    transform: scale(1.5);
+}
+.deployedMenu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 74px;
+    left: 67px;
+    width: 250px;
+    height: auto;
+    border: 1px solid var(--main-color-dark);
+    background-color: var(--main-bg);
+    box-shadow: rgba(100,100,111,.2) 0 7px 29px 0;
+    z-index: 10;
+}
+.menuTitle{ 
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+    color: var(--main-color);
+    border-bottom: 1px solid var(--main-color-dark);
+}
+.list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+.menuItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    width: 100%;
+    padding: 5px 10px;
+}
+.menuItem span{
+    text-transform: capitalize;
+    color: var(--main-color);
+}
+.menuItem span:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+    color: var(--main-color-dark);
+}

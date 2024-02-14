@@ -1,0 +1,38 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid var(--main-color);
+  border-radius: 25px;
+  color: var(--main-color);
+}
+.logIn{
+  height: 300px;
+}
+.logOut{
+  height: 250px;
+}
+.container h3{
+  text-transform: capitalize;
+}
+.poster{
+  width: auto;
+  height: 200px;
+}
+.subData{
+  align-self: center;
+  display: flex;
+  gap: 10px;
+}
+.btnContainer{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  gap: 20px;
+  margin: 30px 0 10px;
+  justify-self: end;
+}

@@ -1,0 +1,7 @@
+.passwordEye{
+  cursor: pointer;
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  color: var(--main-bg);
+}

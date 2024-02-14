@@ -1,0 +1,16 @@
+.titulo{
+  margin: 20px;
+  border-bottom: 1px solid #14141488;
+}
+.poster{
+  width: 200px;
+  height: 200px;
+}
+.data{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 10px;
+  gap: 5px;
+  text-transform: capitalize;
+}
