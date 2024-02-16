@@ -1,6 +1,6 @@
 import { moviesAdapter } from "@/adapter";
 import { BaseMovieUrl, defaultIdGenero } from "@/constants";
-import { AdaptedMovie, GetAllMoviesResp, MovieFromDb, MovieQueryParams, NewMovie } from "@/model";
+import { AdaptedMovie, GetAllMoviesResp, MovieFromDb, MovieQueryParams, MutateMovie, NewMovie } from "@/model";
 
 interface fetchParam {
   queries: MovieQueryParams;
@@ -40,7 +40,7 @@ export async function getAllMovies({ pageParam, queries, idGenero }: fetchParam)
   }
 }
 
-export async function createMovie(movie: AdaptedMovie, token: string) {
+export async function createMovie(movie: MutateMovie, token: string) {
   const formData = getMovieFormData(movie);
 
   const res = await fetch(BaseMovieUrl, {
@@ -54,35 +54,34 @@ export async function createMovie(movie: AdaptedMovie, token: string) {
   const json = await res.json();
 
   if (!res.ok) {
-    console.log(await res.json())
+    console.log(json)
   }
   return json;
 }
 
-export async function updateMovie(movie: AdaptedMovie, token: string){
+export async function updateMovie(movie: MutateMovie, token: string){
   const formData = getMovieFormData(movie);
 
   const { id: movieId } = movie;
-  console.log(movieId)
   formData.append("id", movieId.toString());
-
 
   const res = await fetch(`${BaseMovieUrl}/${movieId}`, {
     method: "PUT", 
-    body: JSON.stringify(movie),
+    body: formData,
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`
     },
   });
 
+  const json = await res.json();
+
   if (!res.ok) {
-    console.log(await res.json())
+    console.log(json)
   }
-  return res.json();
+  return json;
 }
 
-function getMovieFormData(movie: AdaptedMovie){
+function getMovieFormData(movie: MutateMovie){
   const formData = new FormData();
 
   formData.append("titulo", movie.titulo);

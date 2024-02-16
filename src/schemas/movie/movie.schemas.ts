@@ -26,9 +26,6 @@ export const movieSchema = z.object({
   poster: z
     .any(),
 
-    // .string(basicError("El poster", "texto"))
-    // .optional(),
-
   idGenero: z
     .coerce
     .number(basicError("El id genero", "numero"))
@@ -41,5 +38,8 @@ export const movieSchema = z.object({
 
 export const newMovieSchema = movieSchema.omit({ 
   id: true,
+  genero: true 
+});
+export const mutateMovieSchema = movieSchema.omit({ 
   genero: true 
 });

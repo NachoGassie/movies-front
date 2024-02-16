@@ -4,6 +4,15 @@ import styles from './pagination.module.css';
 export default function Pagination(){
   const { fetchNextPage, hasNextPage } = useGetAllMovies();
 
+
+  // const handleClick = () => {
+  //   if (hasNextPage) {
+  //     fetchNextPage();
+  //   }else{
+
+  //   }
+  // }
+
   return (
     <>
       {

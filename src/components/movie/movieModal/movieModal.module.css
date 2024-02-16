@@ -1,6 +1,7 @@
 .titulo{
   margin: 20px;
   border-bottom: 1px solid #14141488;
+  text-transform: capitalize;
 }
 .poster{
   width: 200px;

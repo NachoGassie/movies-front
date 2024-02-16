@@ -1,11 +1,10 @@
 'use client'
 
-import { EmaiValidationRule } from "@/constants";
+import { HookFormInput } from "@/components";
 import { useLoginForm } from "@/hooks";
 import { useState } from "react";
-import { FaEye as Showed, FaEyeSlash as Hidden } from "react-icons/fa";
+import { FaEyeSlash as Hidden, FaEye as Showed } from "react-icons/fa";
 import styles from './login.module.css';
-import DefaultError from "@/components/error/error";
 
 export default function Login(){
   const { 
@@ -18,27 +17,27 @@ export default function Login(){
 
   const [hidePW, setHidePW] = useState(true);
 
+  const EyeIcon = () => (
+    <span onClick={() => setHidePW(!hidePW)} className={styles.passwordEye}>
+      { hidePW ? <Hidden /> : <Showed /> }
+    </span>
+  );
+
   return (
     <section className='formContainer'>
       <form onSubmit={handleSubmit(onSubmit)} className='form'>
 
-        <div className='inputContainer'>
-          <label htmlFor="">Email</label>
-          <input {...register('email')} type="text" />
-          {errors.email && <div className="errorTxt">{errors.email.message}</div>}
+        <HookFormInput label="Email" field="email" type="email" errors={errors} register={register}/>
 
-        </div>
-
-        <div className='inputContainer'>
-          <label htmlFor="">Password</label>
-          <input {...register('password')} type={hidePW ? 'password' : 'text'} />
-
-          <span onClick={() => setHidePW(!hidePW)} className={styles.passwordEye}>
-            { hidePW ? <Hidden /> : <Showed /> }
-          </span>
-
-          {errors.password && <p className="errorTxt">{errors.password.message}</p>}
-        </div>
+        <HookFormInput 
+          label="Password" 
+          field="password" 
+          type={hidePW ? 'password' : 'text'}
+          errors={errors} 
+          register={register}
+        >
+          <EyeIcon/>
+        </HookFormInput>
 
         <input 
           type="submit" 

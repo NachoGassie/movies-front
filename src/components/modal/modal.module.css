@@ -21,7 +21,6 @@
   min-height: 100px;
   padding: 20px;
   position: relative;
-  text-transform: capitalize;
   border-radius: 10px;
   background-color: var(--main-bg);
   box-shadow: rgba(100,100,111,.2) 0 7px 29px 0;

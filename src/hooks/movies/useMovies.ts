@@ -1,5 +1,5 @@
 import { defaultMovieQuery } from "@/constants";
-import { AdaptedMovie } from "@/model";
+import { AdaptedMovie, MutateMovie, NewMovie } from "@/model";
 import { createMovie, deleteMovie, getAllMovies, updateMovie } from "@/service";
 import { useAuthStore } from "@/store/auth/auth.store";
 import { useMoviesStore } from "@/store/movies";
@@ -35,13 +35,18 @@ export function useGetAllMovies(){
   };
 }
 
-export function useCreateMovie(){
+export function useMutateMovie(isUpdate: boolean){
   const token = useStore(useAuthStore, (state) => state.token);
   const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (movie: AdaptedMovie) => createMovie(movie, token),
+    mutationFn: (movie: MutateMovie) => {
+      if (isUpdate) {
+        return updateMovie(movie, token);
+      }
+      return createMovie(movie, token);
+    },
 
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['movies'] });
@@ -50,26 +55,8 @@ export function useCreateMovie(){
 
     onError: (error) => console.log(error),
   });
+
 }
-
-export function useUpdateMovie(){
-  const token = useStore(useAuthStore, (state) => state.token);
-  const queryClient = useQueryClient();
-  const router = useRouter();
-
-
-  return useMutation({
-    mutationFn: (movie: AdaptedMovie) => updateMovie(movie, token),
-    
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['movies'] });
-      router.push('/');
-    },
-    
-    onError: (error) => console.log(error),
-  });
-}
-
 
 export function useDeleteMovie(){
   const queryClient = useQueryClient();
