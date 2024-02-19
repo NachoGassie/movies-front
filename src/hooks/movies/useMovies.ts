@@ -1,11 +1,12 @@
-import { defaultMovieQuery } from "@/constants";
-import { AdaptedMovie, MutateMovie, NewMovie } from "@/model";
+import { defaultIdGenero, defaultMovieQuery } from "@/constants";
+import { AdaptedMovie, MovieOrder, MovieSort, MutateMovie, NewMovie } from "@/model";
 import { createMovie, deleteMovie, getAllMovies, updateMovie } from "@/service";
 import { useAuthStore } from "@/store/auth/auth.store";
 import { useMoviesStore } from "@/store/movies";
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from 'next/navigation';
 import { useStore } from "zustand";
+import { useSearchParams } from 'next/navigation';
 
 interface QueryReturn{
   movies: AdaptedMovie[];
@@ -13,19 +14,25 @@ interface QueryReturn{
 }
 
 export function useGetAllMovies(){
-  const queries = useMoviesStore(state => state.query);
-  const idGenero = useMoviesStore(state => state.idGenero);
+  const searchParams = useSearchParams();
+  const order = searchParams.get('order') as MovieOrder || defaultMovieQuery.order;
+  const sort = searchParams.get('sort') as MovieSort || defaultMovieQuery.sort;
+  const idGenero = Number(searchParams.get('idgen')) || defaultIdGenero;
 
-  const result = useInfiniteQuery<QueryReturn>({ 
+  const queries = {
+    ...defaultMovieQuery,
+    sort,
+    order,
+  }
+
+  const { data, error, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery<QueryReturn>({ 
     queryKey: ['movies', queries, idGenero], 
-    queryFn: ({pageParam = 1}) => getAllMovies({queries, pageParam, idGenero}),
+    queryFn: ({ pageParam = queries.pag }) => getAllMovies({queries, pageParam, idGenero}),
     initialPageParam: defaultMovieQuery.pag,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     refetchOnWindowFocus: false, 
   });
 
-  const { data, error, isLoading, hasNextPage, fetchNextPage } = result;
-  
   const movies = data 
     ? data.pages.flatMap(page => page.movies) 
     : [];

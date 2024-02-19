@@ -12,6 +12,9 @@
     padding: 15px 0;
     color: var(--main-color);
 }
+.headerList li{
+    cursor: pointer;
+}
 .burger, .closeBurger{
     width: 30px;
     height: 30px;

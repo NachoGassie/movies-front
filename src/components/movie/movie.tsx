@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useStore } from "zustand";
 
 import styles from './movie.module.css';
+import { useModalStore } from "@/store/useModal";
 
 interface Props {
   movie: AdaptedMovie;
@@ -18,11 +19,13 @@ export default function Movie({ movie }: Props){
   const setMovieToDelete = useMoviesStore(state => state.setMovieToDelete);
   const setMovieToUpdate = useMoviesStore(state => state.setMovieToUpdate);
   const isLogged = useStore(useAuthStore, state => state.isLogged);
+  const openModal = useModalStore(state => state.openModal);
   
   const router = useRouter();
 
   const showMore = () => {
     showMovieById(movie);
+    openModal();
   }
   const updateMovie = () => {
     setMovieToUpdate(movie);
@@ -30,6 +33,7 @@ export default function Movie({ movie }: Props){
   }
   const deleteMovie = () => {
     setMovieToDelete(movie);
+    openModal();
   }
   
   return(

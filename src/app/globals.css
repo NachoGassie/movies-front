@@ -64,7 +64,6 @@ button{
   position: relative;
   gap: 5px;
   color: var(--main-color);
-  /* text-transform: capitalize; */
   width: 70%;
 }
 .mainInput, .mainSelect{
@@ -95,6 +94,10 @@ button{
   align-self: center;
   color:var(--main-red);
 }
+.notFoundTxt{
+  align-self: center;
+  color:var(--main-color);
+}
 /* Button */
 .mainButton{
   display: inline-flex;
@@ -107,6 +110,7 @@ button{
   position: relative;
   background-color: var(--main-color);
   border-radius: 15px;
+  cursor: pointer;
 }
 .mainButton span{
   color: var(--main-bg);

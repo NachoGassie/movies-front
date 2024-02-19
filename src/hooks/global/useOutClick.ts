@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 type Fn = () => void;
 
 export default function useOutClick(closeFn: Fn){
-  const modalRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     document.addEventListener('mousedown', handler);
@@ -14,10 +14,10 @@ export default function useOutClick(closeFn: Fn){
   });
 
   const handler = (e: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
       closeFn();
     }
   }
 
-  return modalRef;
+  return ref;
 }

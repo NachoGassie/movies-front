@@ -1,9 +1,9 @@
 'use client'
 
 import { useGenreStore } from "@/store/genres/genres.store";
-import { useEffect } from "react";
-import { useMoviesStore } from "@/store/movies";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import useMovieQueries from "../movies/useMovieQueries";
 
 export default function useGenres(){
   const getGenres = useGenreStore(state => state.getGenres);
@@ -12,18 +12,15 @@ export default function useGenres(){
   const showMenu = useGenreStore(state => state.showMenu);
 
   const pathname = usePathname();
-
-  const setIdGenero = useMoviesStore(state => state.setIdGenero);
+  const { handleIdGen } = useMovieQueries()
 
   useEffect(() => {
     const isGetGenres = (showMenu || pathname === '/addmovie') && genres.length === 0;
-    if (isGetGenres) {
-      getGenres();
-    }
+    if (isGetGenres) getGenres();
   }, [showMenu, genres.length, pathname]);
 
   const getMovies = (id: number) => {
-    setIdGenero(id);
+    handleIdGen(id);
     toggleMenu();
   }
 
@@ -31,5 +28,4 @@ export default function useGenres(){
     genres,
     getMovies,
   }
-
 }

@@ -8,15 +8,18 @@ interface GenreState {
   genres: AdaptedGenre[];
   showMenu: boolean;
 }
-
 interface GenreActions{
   getGenres: () => Promise<void>;
   toggleMenu: () => void;
 }
 
-export const useGenreStore = create<GenreState & GenreActions>()((set, get) => ({
+const initialState: GenreState = {
   genres: [],
   showMenu: false,
+}
+
+export const useGenreStore = create<GenreState & GenreActions>()((set, get) => ({
+  ...initialState,
 
   getGenres: async() => {
     const res = await fetch(baseUrl);
@@ -27,6 +30,6 @@ export const useGenreStore = create<GenreState & GenreActions>()((set, get) => (
     set({ genres });
   },
 
-  toggleMenu: () => set(({ showMenu: !get().showMenu })),
+  toggleMenu: () => set({ showMenu: !get().showMenu }),
   
 }))

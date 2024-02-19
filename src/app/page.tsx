@@ -1,5 +1,8 @@
 'use client'
-import { DeleteMovie, Loader, Modal, Movie, MovieModal, Order, Pagination, Sort } from "@/components";
+
+import { 
+  DeleteMovie, Loader, Modal, Movie, MovieModal, Order, Pagination, Sort 
+} from "@/components";
 import DefaultError from "@/components/error/error";
 import { useGetAllMovies } from "@/hooks";
 import styles from "./page.module.css";
@@ -30,7 +33,7 @@ export default function Home() {
       {
         movies.length === 0
         ? <p className={styles.noMoviesTxt}>No hay peliculas disponibles</p>
-        :<>       
+        : <>       
           <section className={styles.moviesContainer}>
             {
               movies?.map((movie) => (

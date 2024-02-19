@@ -30,7 +30,7 @@ export async function getAllMovies({ pageParam, queries, idGenero }: fetchParam)
 
   const currentPage = Number(json.pagesCount.split('/')[0]);
   const nextPage = currentPage+1;
-  const nextCursor = nextPage  > maxPag 
+  const nextCursor = nextPage > maxPag 
     ? undefined 
     : nextPage;
 
@@ -42,6 +42,7 @@ export async function getAllMovies({ pageParam, queries, idGenero }: fetchParam)
 
 export async function createMovie(movie: MutateMovie, token: string) {
   const formData = getMovieFormData(movie);
+  formData.append("poster", movie.poster[0]);
 
   const res = await fetch(BaseMovieUrl, {
     method: "POST", 
@@ -64,6 +65,7 @@ export async function updateMovie(movie: MutateMovie, token: string){
 
   const { id: movieId } = movie;
   formData.append("id", movieId.toString());
+  if(movie.poster) formData.append("poster", movie.poster[0]);
 
   const res = await fetch(`${BaseMovieUrl}/${movieId}`, {
     method: "PUT", 
@@ -88,8 +90,6 @@ function getMovieFormData(movie: MutateMovie){
   formData.append("sinopsis", movie.sinopsis);
   formData.append("anioLanzamiento", movie.anioLanzamiento.toString());
   formData.append("idGenero", movie.idGenero.toString());
-
-  if(movie.poster) formData.append("poster", movie.poster[0]);
   
   return formData;
 }

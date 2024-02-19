@@ -1,12 +1,12 @@
 import { sortByFields } from "@/constants/movie.constants";
-import { useMoviesStore } from "@/store/movies";
+import useMovieQueries from '@/hooks/movies/useMovieQueries';
 import style from './sort.module.css';
+
 
 export default function Sort(){
 
-  const activeSort = useMoviesStore(state => state.query.sort);
-  const setSort = useMoviesStore(state => state.setSort);
-
+  const { activeSort, handleSort } = useMovieQueries();
+  
   return(
     <div className={style.sortContainer}>
       {
@@ -23,7 +23,7 @@ export default function Sort(){
             <input
               id={sort}
               defaultChecked = { sort === activeSort }
-              onChange={() => setSort(sort)}
+              onChange={() => handleSort(sort)}
               type="radio" 
               name="movieSort" 
             />

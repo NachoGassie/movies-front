@@ -1,4 +1,6 @@
 'use client'
+
+import useMovieQueries from "@/hooks/movies/useMovieQueries";
 import { useAuthStore, useGenreStore, useMoviesStore, useStore } from "@/store";
 import Link from "next/link";
 import { IoIosClose } from "react-icons/io";
@@ -10,13 +12,10 @@ export default function NavLink(){
   const toggleMenu = useGenreStore(state => state.toggleMenu);
   const showMenu = useGenreStore(state => state.showMenu);
 
-  const closeSession = useAuthStore(state => state.closeSession);
   const isLogged = useStore(useAuthStore, state => state.isLogged);
+  const closeSession = useAuthStore(state => state.closeSession);
 
   const clearMovieToUpdate = useMoviesStore(state => state.clearMovieToUpdate);
-
-  // const resetForm = () => clearMovieToUpdate();
-  
 
   return(
     <ul className={ styles.headerList }>
@@ -36,7 +35,7 @@ export default function NavLink(){
       </li>
 
       <li>
-        <Link href='/'>Peliculas</Link>
+        Lista de Pelis
       </li>
 
       {
@@ -44,18 +43,20 @@ export default function NavLink(){
         ? <> 
           <li>
             <Link href='/addmovie'>
-              <span onClick={() => clearMovieToUpdate()}>Agregar Pelicula</span>
+              <span onClick={clearMovieToUpdate}>Agregar Pelicula</span>
             </Link>
           </li>
 
           <li onClick={closeSession}>
-            <Link href='/'>Cerrar sesion</Link>
+            Cerrar sesion
           </li>
         </>
         : <li>
           <Link href='/login'>Iniciar Sesión</Link>
         </li>
       }
+      
+
     </ul>
   );
 }

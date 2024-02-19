@@ -6,20 +6,28 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutateMovie } from "./useMovies";
 
 export default function useMovieForm(){
-  const { zodSchema, isUpdate, defaultMovie } = customForm();
+  const movieToUpdate = useMoviesStore(state => state.movieToUpdate);
+  const isUpdate = !!movieToUpdate;
+  const zodSchema = isUpdate ? mutateMovieSchema : newMovieSchema;
+  const defaultMovie = movieToUpdate ?? {}
 
   const {
     formState: { errors },
     register,
     handleSubmit,
+    reset,
   } = useForm<MutateMovie>({
     resolver: zodResolver(zodSchema),
     defaultValues: defaultMovie
   });
 
+
   const { mutate } = useMutateMovie(isUpdate);
 
-  const onSubmit: SubmitHandler<MutateMovie> = (data) => mutate(data);
+  const onSubmit: SubmitHandler<MutateMovie> = (data) => {
+    mutate(data);
+    // reset();
+  };
 
   return {
     errors,
@@ -28,18 +36,4 @@ export default function useMovieForm(){
     onSubmit, 
     register, 
   }
-}
-
-
-function customForm(){
-
-  const movieToUpdate = useMoviesStore(state => state.movieToUpdate);
-  const isUpdate = !!movieToUpdate;
-  const zodSchema = isUpdate ? mutateMovieSchema : newMovieSchema;
-
-  return {
-    isUpdate,
-    zodSchema,
-    defaultMovie: movieToUpdate ?? {},
-  };
 }

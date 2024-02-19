@@ -1,17 +1,9 @@
 import { orderByFields } from '@/constants/movie.constants';
-import { MovieOrder } from '@/model/movie';
-import { useMoviesStore } from '@/store/movies';
-import { ChangeEvent } from 'react';
+import useMovieQueries from '@/hooks/movies/useMovieQueries';
 import styles from './order.module.css';
 
 export default function Order(){
-
-  // const selectedOrder = useMoviesStore(state => state.query.order);
-  const setOrder = useMoviesStore(state => state.setOrder);
-
-  const handleOrder = (e: ChangeEvent<HTMLSelectElement>) => {
-    setOrder(e.target.value as MovieOrder);
-  } 
+  const { handleOrder } = useMovieQueries();
 
   return (
     <select className={styles.select} onChange={handleOrder}>
@@ -20,7 +12,6 @@ export default function Order(){
           <option 
             key={index} 
             value={order.value}
-            // selected={order.value === selectedOrder}
           >
             {order.name}
           </option>

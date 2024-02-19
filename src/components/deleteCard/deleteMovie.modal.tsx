@@ -3,16 +3,17 @@
 import { useMoviesStore } from "@/store";
 import styles from './deleteCard.module.css';
 import { useDeleteMovie } from "@/hooks";
+import { useModalStore } from "@/store/useModal";
 
 export default function DeleteMovie(){
   const movieToDelete = useMoviesStore(state => state.movieToDelete);
-  const toggleModal = useMoviesStore(state => state.toggleModal);
+  const closeModal = useModalStore(state => state.closeModal);
   const deleteMovie = useDeleteMovie();
 
   const handleDelete = () => {
     if (movieToDelete) {
       deleteMovie.mutate(movieToDelete.id);
-      toggleModal();
+      closeModal();
     }
   }
 
@@ -35,7 +36,7 @@ export default function DeleteMovie(){
 
         <button 
           className={`${styles.btn} ${styles.cancel}`} 
-          onClick={toggleModal}
+          onClick={closeModal}
         >
           Cancelar
         </button>
