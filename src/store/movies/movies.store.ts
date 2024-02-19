@@ -11,6 +11,8 @@ interface MovieAction {
   setMovieToDelete: (x: AdaptedMovie) => void;
   setMovieToUpdate: (x: AdaptedMovie) => void;
   clearMovieToUpdate: () => void;
+  clearMovieToShowById: () => void;
+  clearMovieToDelete: () => void;
 }
 
 const initialState: MovieState = {
@@ -19,7 +21,7 @@ const initialState: MovieState = {
   movieToUpdate: null,
 }
 
-export const useMoviesStore = create<MovieState & MovieAction>()((set, get) => ({
+export const useMoviesStore = create<MovieState & MovieAction>()((set) => ({
   ...initialState,
 
   showMovieById: (movieToShow: AdaptedMovie) => {
@@ -42,5 +44,7 @@ export const useMoviesStore = create<MovieState & MovieAction>()((set, get) => (
   },
 
   clearMovieToUpdate: () => set({movieToUpdate: null}),
+  clearMovieToDelete: () => set({movieToDelete: null}),
+  clearMovieToShowById: () => set({movieToShow: null}),
 
 }));

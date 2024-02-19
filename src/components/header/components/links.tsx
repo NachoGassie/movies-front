@@ -35,7 +35,7 @@ export default function NavLink(){
       </li>
 
       <li>
-        Lista de Pelis
+        <Link href='/'>Inicio</Link>
       </li>
 
       {

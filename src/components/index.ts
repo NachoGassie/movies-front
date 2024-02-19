@@ -1,4 +1,5 @@
-export { default as DeleteMovie } from './deleteCard/deleteMovie.modal';
+export { default as DeleteGenre } from './deleteGenre/deleteGenre';
+export { default as DeleteMovie } from './deleteMovie/deleteMovie';
 export { default as Error } from './error/error';
 export { default as Header } from './header/header';
 export { default as Links } from './header/components/links';

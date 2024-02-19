@@ -1,12 +1,10 @@
 import { defaultIdGenero, defaultMovieQuery } from "@/constants";
-import { AdaptedMovie, MovieOrder, MovieSort, MutateMovie, NewMovie } from "@/model";
+import { AdaptedMovie, MovieOrder, MovieSort, MutateMovie } from "@/model";
 import { createMovie, deleteMovie, getAllMovies, updateMovie } from "@/service";
 import { useAuthStore } from "@/store/auth/auth.store";
-import { useMoviesStore } from "@/store/movies";
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useStore } from "zustand";
-import { useSearchParams } from 'next/navigation';
 
 interface QueryReturn{
   movies: AdaptedMovie[];

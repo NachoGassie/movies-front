@@ -2,7 +2,7 @@
 
 import MovieBoxBtn from "@/components/button/movieBox.btn";
 import { AdaptedMovie } from "@/model/movie/movie.model";
-import { useAuthStore } from "@/store";
+import { useAuthStore, useGenreStore } from "@/store";
 import { useMoviesStore } from "@/store/movies/movies.store";
 import { useRouter } from 'next/navigation';
 import { useStore } from "zustand";
@@ -18,6 +18,8 @@ export default function Movie({ movie }: Props){
   const showMovieById = useMoviesStore(state => state.showMovieById);
   const setMovieToDelete = useMoviesStore(state => state.setMovieToDelete);
   const setMovieToUpdate = useMoviesStore(state => state.setMovieToUpdate);
+  const clearGenreToDelete = useGenreStore(state => state.clearGenreToDelete);
+
   const isLogged = useStore(useAuthStore, state => state.isLogged);
   const openModal = useModalStore(state => state.openModal);
   
@@ -25,6 +27,7 @@ export default function Movie({ movie }: Props){
 
   const showMore = () => {
     showMovieById(movie);
+    clearGenreToDelete();
     openModal();
   }
   const updateMovie = () => {
@@ -33,6 +36,7 @@ export default function Movie({ movie }: Props){
   }
   const deleteMovie = () => {
     setMovieToDelete(movie);
+    clearGenreToDelete();
     openModal();
   }
   

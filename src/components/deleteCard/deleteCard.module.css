@@ -10,7 +10,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.titulo{
+.text span{
   text-decoration: underline;
 }
 .btnContainer{

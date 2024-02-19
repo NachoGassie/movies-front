@@ -1,6 +1,6 @@
 import { moviesAdapter } from "@/adapter";
 import { BaseMovieUrl, defaultIdGenero } from "@/constants";
-import { AdaptedMovie, GetAllMoviesResp, MovieFromDb, MovieQueryParams, MutateMovie, NewMovie } from "@/model";
+import { AdaptedMovie, GetAllMoviesResp, MovieQueryParams, MutateMovie, NewMovie } from "@/model";
 
 interface fetchParam {
   queries: MovieQueryParams;

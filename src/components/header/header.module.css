@@ -54,7 +54,7 @@
 }
 .menuItem{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     font-size: 18px;
     width: 100%;
@@ -63,6 +63,14 @@
 .menuItem span{
     text-transform: capitalize;
     color: var(--main-color);
+}
+.menuItemDelete{
+    /* color: #000; */
+    color: var(--main-color);
+    cursor: pointer;
+}
+.menuItemDelete:hover{
+    transform: scale(1.2);
 }
 .menuItem span:hover{
     transform: scale(1.2);

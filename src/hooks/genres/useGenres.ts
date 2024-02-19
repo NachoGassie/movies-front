@@ -1,31 +1,33 @@
 'use client'
 
-import { useGenreStore } from "@/store/genres/genres.store";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
-import useMovieQueries from "../movies/useMovieQueries";
+import { deleteGenre, getAllGenres } from "@/service";
+import { useAuthStore } from "@/store";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useStore } from "zustand";
 
-export default function useGenres(){
-  const getGenres = useGenreStore(state => state.getGenres);
-  const toggleMenu = useGenreStore(state => state.toggleMenu);
-  const genres = useGenreStore(state => state.genres);
-  const showMenu = useGenreStore(state => state.showMenu);
+export function useGetAllGenres(){
+  const { data, error, isLoading }  = useQuery({
+    queryKey: ['genres'],
+    queryFn: getAllGenres,
+  });
 
-  const pathname = usePathname();
-  const { handleIdGen } = useMovieQueries()
-
-  useEffect(() => {
-    const isGetGenres = (showMenu || pathname === '/addmovie') && genres.length === 0;
-    if (isGetGenres) getGenres();
-  }, [showMenu, genres.length, pathname]);
-
-  const getMovies = (id: number) => {
-    handleIdGen(id);
-    toggleMenu();
-  }
+  const genres = data ?? [];
 
   return {
-    genres,
-    getMovies,
+    genres, error, isLoading,
   }
+}
+
+export function useDeleteGenre(){
+  const queryClient = useQueryClient();
+  const token = useStore(useAuthStore, (state) => state.token);
+
+  return useMutation({
+    mutationFn: (id: number) => deleteGenre(id, token),
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['genres'] });
+    },
+    onError: (error) => console.log(error),
+  });
 }

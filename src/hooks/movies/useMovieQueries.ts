@@ -13,17 +13,17 @@ export default function useQueries(){
   const activeSort = searchParams.get('sort') as MovieSort || defaultMovieQuery.sort;
   const params = new URLSearchParams(searchParams); 
 
-  const handleOrder = (e: ChangeEvent<HTMLSelectElement>) => {
+  const setOrder = (e: ChangeEvent<HTMLSelectElement>) => {
     params.set('order', e.target.value);
     const url = `${pathName}?${params.toString()}`;
     router.push(url);
   }
-  const handleSort = (sort: MovieSort) => {
+  const setSort = (sort: MovieSort) => {
     params.set('sort', sort);
     const url = `${pathName}?${params.toString()}`;
     router.push(url);
   }
-  const handleIdGen = (idGenero: number) => {
+  const setIdGen = (idGenero: number) => {
     params.set('idgen', idGenero.toString());
     const url = `${pathName}?${params.toString()}`;
     router.push(url);
@@ -31,8 +31,8 @@ export default function useQueries(){
 
   return {
     activeSort,
-    handleSort,
-    handleOrder,
-    handleIdGen,
+    setSort,
+    setOrder,
+    setIdGen,
   }
 }

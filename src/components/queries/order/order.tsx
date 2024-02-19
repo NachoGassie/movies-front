@@ -3,10 +3,10 @@ import useMovieQueries from '@/hooks/movies/useMovieQueries';
 import styles from './order.module.css';
 
 export default function Order(){
-  const { handleOrder } = useMovieQueries();
+  const { setOrder } = useMovieQueries();
 
   return (
-    <select className={styles.select} onChange={handleOrder}>
+    <select className={styles.select} onChange={setOrder}>
       {
         orderByFields.map((order, index) => (
           <option 

@@ -1,15 +1,37 @@
 'use client'
 
 import { defaultIdGenero } from '@/constants/movie.constants';
-import { useGenres } from '@/hooks';
+import { useGetAllGenres, useMovieQueries } from '@/hooks';
 import useOutClick from '@/hooks/global/useOutClick';
-import { useGenreStore } from '@/store';
+import { useAuthStore, useGenreStore, useModalStore, useMoviesStore, useStore } from '@/store';
+import { MdDeleteForever } from "react-icons/md";
 import styles from '../header.module.css';
+import { AdaptedGenre } from '@/model';
 
 export default function Menu(){
-  const { genres, getMovies } = useGenres();
   const toggleMenu = useGenreStore(state => state.toggleMenu);
+  const openModal = useModalStore(state => state.openModal);
+  const setGenreToDelete = useGenreStore(state => state.setGenreToDelete);
+  const { setIdGen } = useMovieQueries();
+  const clearMovieToDelete = useMoviesStore(state => state.clearMovieToDelete);
+  const clearMovieToShowById = useMoviesStore(state => state.clearMovieToShowById);
+
+  const { genres } = useGetAllGenres();
+  const isLogged = useStore(useAuthStore, state => state.isLogged);
   const menuRef = useOutClick(toggleMenu);
+
+  const getMovies = (id: number) => {
+    setIdGen(id);
+    toggleMenu();
+  }
+
+  const deleteGenre = (genre: AdaptedGenre) =>{ 
+    setGenreToDelete(genre);
+    clearMovieToShowById();
+    clearMovieToDelete();
+    toggleMenu();
+    openModal();
+  }
   
   return (
     <div className={styles.deployedMenu} ref={menuRef}>
@@ -22,11 +44,20 @@ export default function Menu(){
         {
           genres.map(genre => (
             <li 
-              onClick={() => getMovies(genre.idGenero)}
               className={styles.menuItem}
               key={genre.idGenero}
             >
-              <span>{genre.genero}</span>
+              <span onClick={() => getMovies(genre.idGenero)}>
+                {genre.genero}
+              </span>
+
+              {
+                isLogged &&
+                <MdDeleteForever 
+                  onClick={() => deleteGenre(genre)}
+                  className={styles.menuItemDelete}
+                />
+              }
             </li>
           ))
         }

@@ -1,34 +1,26 @@
-import { genresAdapter } from "@/adapter/genre.adapter";
 import { AdaptedGenre } from "@/model/genre/genre.model";
 import { create } from "zustand";
 
-const baseUrl = 'http://localhost:3040/api/v1/genres';
-
 interface GenreState {
-  genres: AdaptedGenre[];
+  genreToDelete: AdaptedGenre | null;
   showMenu: boolean;
 }
 interface GenreActions{
-  getGenres: () => Promise<void>;
   toggleMenu: () => void;
+  setGenreToDelete: (genre: AdaptedGenre) => void;
+  clearGenreToDelete: () => void;
 }
 
 const initialState: GenreState = {
-  genres: [],
+  genreToDelete: null,
   showMenu: false,
 }
 
 export const useGenreStore = create<GenreState & GenreActions>()((set, get) => ({
   ...initialState,
 
-  getGenres: async() => {
-    const res = await fetch(baseUrl);
-    const json = await res.json();
-
-    const genres = genresAdapter(json.genres);
-
-    set({ genres });
-  },
+  setGenreToDelete: (genreToDelete: AdaptedGenre) => set({ genreToDelete }),
+  clearGenreToDelete: () => set({ genreToDelete: null }),
 
   toggleMenu: () => set({ showMenu: !get().showMenu }),
   

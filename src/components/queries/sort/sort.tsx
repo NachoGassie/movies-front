@@ -5,7 +5,7 @@ import style from './sort.module.css';
 
 export default function Sort(){
 
-  const { activeSort, handleSort } = useMovieQueries();
+  const { activeSort, setSort } = useMovieQueries();
   
   return(
     <div className={style.sortContainer}>
@@ -23,7 +23,7 @@ export default function Sort(){
             <input
               id={sort}
               defaultChecked = { sort === activeSort }
-              onChange={() => handleSort(sort)}
+              onChange={() => setSort(sort)}
               type="radio" 
               name="movieSort" 
             />

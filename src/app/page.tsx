@@ -1,7 +1,7 @@
 'use client'
 
 import { 
-  DeleteMovie, Loader, Modal, Movie, MovieModal, Order, Pagination, Sort 
+  DeleteGenre, DeleteMovie, Loader, Modal, Movie, MovieModal, Order, Pagination, Sort 
 } from "@/components";
 import DefaultError from "@/components/error/error";
 import { useGetAllMovies } from "@/hooks";
@@ -41,15 +41,16 @@ export default function Home() {
               ))
             }
 
-            <Modal>
-              <DeleteMovie />
-              <MovieModal />
-            </Modal>
-
           </section>
           <Pagination />
         </>
       }
+
+      <Modal>
+        <DeleteGenre />
+        <DeleteMovie />
+        <MovieModal />
+      </Modal>
     </>
   );
 }

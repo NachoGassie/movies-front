@@ -1,13 +1,13 @@
 'use client'
 
 import { HookFormInput } from "@/components";
-import { useGenres } from "@/hooks";
+import { useGetAllGenres } from "@/hooks";
 import useMovieForm from "@/hooks/movies/useMovieForm";
 
 export default function AddMovie(){
 
   const { errors, isUpdate, handleSubmit, onSubmit, register } = useMovieForm();
-  const { genres } = useGenres();
+  const { genres } = useGetAllGenres();
 
   return(
 
