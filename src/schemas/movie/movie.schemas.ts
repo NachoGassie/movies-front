@@ -1,5 +1,7 @@
+import { MovieOrder, MovieSort } from "@/model";
 import { anioLanzamientoError, basicError, greaterThanError, stringLenghtError } from "../global/utils.schemas";
 import { z } from "zod";
+import { defaultIdGenero, defaultMovieQuery } from "@/constants";
 
 const anioLanzamientoErr = "El año de lanzamiento debe ser igual a o menor que el año actual y mayor que 1900";
 const currentYear = new Date().getFullYear();
@@ -40,6 +42,15 @@ export const newMovieSchema = movieSchema.omit({
   id: true,
   genero: true 
 });
-export const mutateMovieSchema = movieSchema.omit({ 
-  genero: true 
+export const mutateMovieSchema = movieSchema.omit({ genero: true });
+
+export const movieQueriesSchema = z.object({
+  order: z.enum(['id', 'titulo', 'genero', 'anio_lanzamiento']),
+  sort: z.enum(['asc', 'desc']),
+  idGenero: z
+    .coerce
+    .number(basicError("El id genero", "numero"))
+    .refine((id) => id > 0 || id === defaultIdGenero, {
+      message: "El id genero debe ser un numero entero positivo",
+    }),
 });

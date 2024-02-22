@@ -1,6 +1,6 @@
 'use client'
 
-import { HookFormInput } from "@/components";
+import { HookFormInput, SubmitError } from "@/components";
 import { useLoginForm } from "@/hooks";
 import { useState } from "react";
 import { FaEyeSlash as Hidden, FaEye as Showed } from "react-icons/fa";
@@ -10,6 +10,7 @@ export default function Login(){
   const { 
     errors, 
     isPending, 
+    submitError,
     handleSubmit, 
     onSubmit, 
     register, 
@@ -27,7 +28,7 @@ export default function Login(){
     <section className='formContainer'>
       <form onSubmit={handleSubmit(onSubmit)} className='form'>
 
-        <HookFormInput label="Email" field="email" type="email" errors={errors} register={register}/>
+        <HookFormInput label="Email" field="email" type="email" errors={errors} register={register} />
 
         <HookFormInput 
           label="Password" 
@@ -46,6 +47,7 @@ export default function Login(){
         />
 
       </form>
+      { submitError && <SubmitError msg={submitError.message}/> }
     </section>
   );
 }

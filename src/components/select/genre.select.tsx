@@ -7,7 +7,7 @@ interface Props{
 
 export default function Select({ genres, fn }: Props){
   return(
-    <select name="" id="" onChange={fn}>
+    <select onChange={fn}>
       {
         genres.map(genre => (
           <option value={genre.idGenero}>{genre.genero}</option>

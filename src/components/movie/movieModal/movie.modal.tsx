@@ -1,15 +1,13 @@
 'use client'
+
 import { AdaptedMovie } from '@/model';
 import styles from './movieModal.module.css';
-import { useMoviesStore } from '@/store';
 
 interface Props{
   movie: AdaptedMovie | null;
 }
 
-export default function MovieModal(){
-
-  const movie = useMoviesStore(state => state.movieToShow);
+export default function MovieModal({ movie }: Props){
 
   return movie && (
     <>

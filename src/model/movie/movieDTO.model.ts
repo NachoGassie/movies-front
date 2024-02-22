@@ -1,6 +1,6 @@
 import { GetAllResp } from "../global/globalDTO.model";
-import { Movie } from "./movie.model";
+import { MovieFromDb } from "./movie.model";
 
 export interface GetAllMoviesResp extends GetAllResp {
-  movies: Movie[];
+  movies: MovieFromDb[];
 }

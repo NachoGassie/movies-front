@@ -1,12 +1,15 @@
 'use client'
 
 import { useDeleteGenre } from "@/hooks";
-import { useGenreStore } from "@/store";
+import { AdaptedGenre } from "@/model";
 import { useModalStore } from "@/store/useModal";
 import DeleteCard from "../deleteCard/deleteCard.modal";
 
-export default function DeleteGenre(){
-  const genreToDelete = useGenreStore(state => state.genreToDelete);
+interface Props {
+  genreToDelete: AdaptedGenre;
+}
+
+export default function DeleteGenre({ genreToDelete }: Props){
   const closeModal = useModalStore(state => state.closeModal);
   const deleteGenre = useDeleteGenre();
 

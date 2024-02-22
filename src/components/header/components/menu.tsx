@@ -1,20 +1,20 @@
 'use client'
-
+import { DeleteGenre } from '@/components';
 import { defaultIdGenero } from '@/constants/movie.constants';
 import { useGetAllGenres, useMovieQueries } from '@/hooks';
 import useOutClick from '@/hooks/global/useOutClick';
-import { useAuthStore, useGenreStore, useModalStore, useMoviesStore, useStore } from '@/store';
+import { AdaptedGenre } from '@/model';
+import { useAuthStore, useModalStore, useStore } from '@/store';
 import { MdDeleteForever } from "react-icons/md";
 import styles from '../header.module.css';
-import { AdaptedGenre } from '@/model';
 
-export default function Menu(){
-  const toggleMenu = useGenreStore(state => state.toggleMenu);
-  const openModal = useModalStore(state => state.openModal);
-  const setGenreToDelete = useGenreStore(state => state.setGenreToDelete);
-  const { setIdGen } = useMovieQueries();
-  const clearMovieToDelete = useMoviesStore(state => state.clearMovieToDelete);
-  const clearMovieToShowById = useMoviesStore(state => state.clearMovieToShowById);
+interface Props {
+  toggleMenu: () => void;
+}
+
+export default function Menu({ toggleMenu }: Props){
+  const setIdGen = useMovieQueries().setIdGen;
+  const setComponent = useModalStore(state => state.setComponent);
 
   const { genres } = useGetAllGenres();
   const isLogged = useStore(useAuthStore, state => state.isLogged);
@@ -26,11 +26,8 @@ export default function Menu(){
   }
 
   const deleteGenre = (genre: AdaptedGenre) =>{ 
-    setGenreToDelete(genre);
-    clearMovieToShowById();
-    clearMovieToDelete();
+    setComponent(<DeleteGenre genreToDelete={genre}/>)
     toggleMenu();
-    openModal();
   }
   
   return (

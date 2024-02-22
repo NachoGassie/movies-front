@@ -15,7 +15,7 @@ export default function useLoginForm(){
     resolver: zodResolver(UserLoginReqSchema)
   });
 
-  const { mutate: getToken, isPending } = useGetToken();
+  const { mutate: getToken, isPending, error: submitError } = useGetToken();
 
   const onSubmit: SubmitHandler<UserLoginReq> = async (user) => {
     getToken(user);
@@ -24,6 +24,7 @@ export default function useLoginForm(){
   return {
     errors,
     isPending,
+    submitError,
     handleSubmit, 
     onSubmit, 
     register, 

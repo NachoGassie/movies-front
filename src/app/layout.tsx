@@ -1,4 +1,4 @@
-import { Header } from "@/components";
+import { Header, Modal } from "@/components";
 import Provider from "@/server/query-provider";
 import { montserrat } from "@/ui/fonts";
 import type { Metadata } from "next";
@@ -22,6 +22,7 @@ export default function RootLayout({
           <Header/>
           <main>
             {children}
+            <Modal/>
           </main>
 
         </Provider>

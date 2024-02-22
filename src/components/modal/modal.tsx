@@ -1,19 +1,25 @@
 'use client'
-import { useMoviesStore } from '@/store/movies/movies.store';
-import { AiFillCloseCircle as CloseBtn } from 'react-icons/ai';
-import styles from './modal.module.css';
 import useOutClick from '@/hooks/global/useOutClick';
 import { useModalStore } from '@/store/useModal';
+import { AiFillCloseCircle as CloseBtn } from 'react-icons/ai';
+import styles from './modal.module.css';
+import { useEffect } from 'react';
 
-interface Props {
-  children: React.ReactNode;
-}
-
-export default function Modal({ children }: Props){
+export default function Modal(){
 
   const showModal = useModalStore(state => state.showModal);
   const closeModal = useModalStore(state => state.closeModal);
+  const component = useModalStore(state => state.component);
   const modalRef = useOutClick(closeModal);
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = 'unset';
+      }
+    }
+  },[showModal]);
 
   return(
     <>
@@ -23,7 +29,7 @@ export default function Modal({ children }: Props){
 
           <div className={styles.modalContainer} ref={modalRef}>
 
-            { children } 
+            { component  } 
 
             <button 
               className={styles.btnClose}

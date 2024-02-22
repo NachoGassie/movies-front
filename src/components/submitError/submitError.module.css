@@ -1,0 +1,7 @@
+.submitError{
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  color: var(--main-red);
+  width: 100%;
+}

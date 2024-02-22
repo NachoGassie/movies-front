@@ -1,5 +1,6 @@
 import { genresAdapter } from "@/adapter";
 import { BaseGenreUrl } from "@/constants";
+import { handleError } from "@/utils";
 
 export async function getAllGenres(){
   const res = await fetch(BaseGenreUrl);
@@ -8,7 +9,6 @@ export async function getAllGenres(){
 
   return genres;
 }
-
 
 export async function deleteGenre(genreId: number, token: string){
 
@@ -19,5 +19,9 @@ export async function deleteGenre(genreId: number, token: string){
       Authorization: `Bearer ${token}`
     },
   });
-  return res.json();
+
+  // if (!res.ok) {
+  //   const err = handleError(await res.json());
+  //   throw new Error(err);
+  // }
 }

@@ -14,6 +14,6 @@ export function useGetToken(){
     onSuccess: (token) => {
       saveToken(token);
       router.push('/');
-    },
+    }
   });
 }

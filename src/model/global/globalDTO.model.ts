@@ -4,7 +4,3 @@ export interface GetAllResp{
   next: string | null;
   prev: string | null;
 }
-
-export interface ErrorResp{
-  error: { message: string }
-}

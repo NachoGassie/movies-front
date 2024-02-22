@@ -89,10 +89,11 @@ button{
   background-color: var(--main-color);
 }
 /* Error */
-.errorTxt{
+.errorText{
   text-transform: none;
   align-self: center;
-  color:var(--main-red);
+  color: var(--main-color);
+  font-weight: 800;
 }
 .notFoundTxt{
   align-self: center;
@@ -137,4 +138,3 @@ button{
 .mainButton:hover span{
   color: var(--pure-black);
 }
-  

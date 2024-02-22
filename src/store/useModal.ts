@@ -2,14 +2,29 @@ import { create } from "zustand";
 
 interface State {
   showModal: boolean;
+  component: JSX.Element | null; 
 }
 interface Action {
-  openModal: () => void;
   closeModal: () => void;
+  setComponent: (x: JSX.Element) => void,
+  clearComponent: () => void
 }
 
-export const useModalStore = create<State & Action>()((set, get) => ({
+const initialState = {
   showModal: false,
-  openModal: () => set({showModal: true}),
+  component: null,
+}
+
+export const useModalStore = create<State & Action>()((set) => ({
+ ...initialState,
+
   closeModal: () => set({showModal: false}),
+  setComponent: (component: JSX.Element) => {
+    set({
+      component,
+      showModal: true,
+    })
+  },
+  clearComponent: () => set(initialState)
+  
 }));

@@ -1,6 +1,5 @@
 export { default as DeleteGenre } from './deleteGenre/deleteGenre';
 export { default as DeleteMovie } from './deleteMovie/deleteMovie';
-export { default as Error } from './error/error';
 export { default as Header } from './header/header';
 export { default as Links } from './header/components/links';
 export { default as Loader } from './loader/loader';
@@ -13,3 +12,4 @@ export { default as MovieModal } from './movie/movieModal/movie.modal';
 export { default as Order } from './queries/order/order';
 export { default as Pagination } from './queries/pagination/pagination';
 export { default as Sort } from './queries/sort/sort';
+export { default as SubmitError } from './submitError/submitError';

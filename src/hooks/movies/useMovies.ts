@@ -1,21 +1,32 @@
 import { defaultIdGenero, defaultMovieQuery } from "@/constants";
 import { AdaptedMovie, MovieOrder, MovieSort, MutateMovie } from "@/model";
+import { movieQueriesSchema } from "@/schemas/movie/movie.schemas";
 import { createMovie, deleteMovie, getAllMovies, updateMovie } from "@/service";
 import { useAuthStore } from "@/store/auth/auth.store";
+import { handleError } from "@/utils";
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useStore } from "zustand";
 
-interface QueryReturn{
-  movies: AdaptedMovie[];
-  nextCursor?: number;
+function verifyQueries(){
+  const searchParams = useSearchParams();
+  const order = searchParams.get('order') || defaultMovieQuery.order;
+  const sort = searchParams.get('sort') || defaultMovieQuery.sort;
+  const idGenero = Number(searchParams.get('idgen')) || defaultIdGenero;
+
+  return movieQueriesSchema.parse({ order, sort, idGenero });
 }
 
 export function useGetAllMovies(){
-  const searchParams = useSearchParams();
-  const order = searchParams.get('order') as MovieOrder || defaultMovieQuery.order;
-  const sort = searchParams.get('sort') as MovieSort || defaultMovieQuery.sort;
-  const idGenero = Number(searchParams.get('idgen')) || defaultIdGenero;
+  let order: MovieOrder, sort: MovieSort, idGenero: number;
+
+  try {
+    order = verifyQueries().order;
+    sort = verifyQueries().sort;
+    idGenero = verifyQueries().idGenero;
+  } catch (error) {
+    throw new Error(handleError(error as Error)); 
+  }
 
   const queries = {
     ...defaultMovieQuery,
@@ -23,7 +34,9 @@ export function useGetAllMovies(){
     order,
   }
 
-  const { data, error, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery<QueryReturn>({ 
+  const { data, error, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery<{
+    movies: AdaptedMovie[], nextCursor?: number
+  }>({ 
     queryKey: ['movies', queries, idGenero], 
     queryFn: ({ pageParam = queries.pag }) => getAllMovies({queries, pageParam, idGenero}),
     initialPageParam: defaultMovieQuery.pag,
@@ -31,13 +44,10 @@ export function useGetAllMovies(){
     refetchOnWindowFocus: false, 
   });
 
-  const movies = data 
-    ? data.pages.flatMap(page => page.movies) 
-    : [];
+  if (error) { throw new Error(error.message) }; 
+  const movies = data?.pages.flatMap(page => page.movies);
 
-  return {
-    movies, error, isLoading, hasNextPage, fetchNextPage, 
-  };
+  return { movies, isLoading, hasNextPage, fetchNextPage }
 }
 
 export function useMutateMovie(isUpdate: boolean){
@@ -47,9 +57,7 @@ export function useMutateMovie(isUpdate: boolean){
 
   return useMutation({
     mutationFn: (movie: MutateMovie) => {
-      if (isUpdate) {
-        return updateMovie(movie, token);
-      }
+      if (isUpdate) return updateMovie(movie, token);
       return createMovie(movie, token);
     },
 
@@ -58,9 +66,8 @@ export function useMutateMovie(isUpdate: boolean){
       router.push('/');
     },
 
-    onError: (error) => console.log(error),
+    onError: (error) => { throw new Error(error.message) },
   });
-
 }
 
 export function useDeleteMovie(){
@@ -73,7 +80,9 @@ export function useDeleteMovie(){
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['movies'] });
     },
-    onError: (error) => console.log(error),
-  })
-
+    onError: (error) => { 
+      // throw new Error(error.message);
+      console.log('error') 
+    },
+  });
 }

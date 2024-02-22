@@ -1,17 +1,17 @@
 'use client'
 
-import useMovieQueries from "@/hooks/movies/useMovieQueries";
-import { useAuthStore, useGenreStore, useMoviesStore, useStore } from "@/store";
+import { useAuthStore, useMoviesStore, useStore } from "@/store";
 import Link from "next/link";
 import { IoIosClose } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import styles from '../header.module.css';
 
-export default function NavLink(){
+interface Props {
+  showMenu: boolean;
+  toggleMenu: () => void;
+}
 
-  const toggleMenu = useGenreStore(state => state.toggleMenu);
-  const showMenu = useGenreStore(state => state.showMenu);
-
+export default function NavLink({ toggleMenu, showMenu }: Props){
   const isLogged = useStore(useAuthStore, state => state.isLogged);
   const closeSession = useAuthStore(state => state.closeSession);
 
