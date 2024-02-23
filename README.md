@@ -2,6 +2,7 @@
 First, get the api:
 
 Go to https://github.com/NachoGassie/movies_api to clone the api. You will have to import the MySqlDb and change the branch to <local>
+To login you can use email: user@user.com - password: contraseña
 (this project is yet to be deployed and therefore it only uses a local api and db for now)
 
 Then, run the development server:
