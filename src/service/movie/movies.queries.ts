@@ -1,7 +1,8 @@
 import { moviesAdapter } from "@/adapter";
 import { BaseMovieUrl, defaultIdGenero } from "@/constants";
 import { AdaptedMovie, GetAllMoviesResp, MovieQueryParams, MutateMovie } from "@/model";
-import { handleErrorByStatus } from "@/utils";
+import { handleError, handleErrorByStatus } from "@/utils";
+import { createOne, deleteOne, updateOne } from "../defaultQueries";
 
 interface GetAllParams {
   queries: MovieQueryParams;
@@ -12,7 +13,6 @@ interface GetAllParams {
 export async function getAllMovies({ pageParam, queries, idGenero }: GetAllParams): Promise<{
   movies: AdaptedMovie[], nextCursor?: number;
 }>{
-
   const { limit, sort, order } = queries;
   const generoUrl = idGenero === defaultIdGenero ? '' : `/genre/${idGenero}`;
   const queryUrl = `pag=${pageParam}&limit=${limit}&sort=${sort}&order=${order}`;
@@ -38,29 +38,28 @@ export async function getAllMovies({ pageParam, queries, idGenero }: GetAllParam
 }
 
 export async function createMovie(movie: MutateMovie, token: string) {
-  const formData = getMovieFormData(movie);
-  formData.append("poster", movie.poster[0]);
-
-  await fetch(BaseMovieUrl, {
-    method: "POST", 
-    body: formData,
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  try {
+    const formData = getMovieFormData(movie);
+    formData.append("poster", movie.poster[0]);
+    createOne(BaseMovieUrl, formData, token);
+  } catch (error) {
+    throw new Error(handleError(error as Error)); 
+  }
 }
 
 export async function updateMovie(movie: MutateMovie, token: string){
-  const formData = getMovieFormData(movie);
-
   const { id: movieId } = movie;
-  
-  formData.append("id", movieId.toString());
-  if(movie.poster) formData.append("poster", movie.poster[0]);
+  const url = `${BaseMovieUrl}/${movieId}`;
 
-  await fetch(`${BaseMovieUrl}/${movieId}`, {
-    method: "PUT", 
-    body: formData,
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  try {
+    const formData = getMovieFormData(movie);
+    formData.append("id", movieId.toString());
+    if(movie.poster) formData.append("poster", movie.poster[0]);
+
+    updateOne(url, formData, token);
+  } catch (error) {
+    throw new Error(handleError(error as Error)); 
+  }
 }
 
 function getMovieFormData(movie: MutateMovie){
@@ -75,12 +74,10 @@ function getMovieFormData(movie: MutateMovie){
 }
 
 export async function deleteMovie(movieId: number, token: string){
+  const url = `${BaseMovieUrl}/${movieId}`;
   try {
-    await fetch(`${BaseMovieUrl}/${movieId}`, {
-      method: "DELETE", 
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    deleteOne(url, token);
   } catch (error) {
-    throw new Error((error as Error).message);
+    throw new Error(handleError(error as Error)); 
   }
 }

@@ -15,23 +15,21 @@ export default function useMovieForm(){
     formState: { errors },
     register,
     handleSubmit,
-    reset,
   } = useForm<MutateMovie>({
     resolver: zodResolver(zodSchema),
     defaultValues: defaultMovie
   });
 
-
-  const { mutate } = useMutateMovie(isUpdate);
+  const { mutate, error: submitError } = useMutateMovie(isUpdate);
 
   const onSubmit: SubmitHandler<MutateMovie> = (data) => {
     mutate(data);
-    // reset();
   };
 
   return {
     errors,
     isUpdate,
+    submitError,
     handleSubmit, 
     onSubmit, 
     register, 

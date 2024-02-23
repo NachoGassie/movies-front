@@ -1,12 +1,14 @@
 'use client'
 
-import { HookFormInput } from "@/components";
+import { HookFormInput, SubmitError } from "@/components";
 import { useGetAllGenres } from "@/hooks";
 import useMovieForm from "@/hooks/movies/useMovieForm";
 
 export default function AddMovie(){
 
-  const { errors, isUpdate, handleSubmit, onSubmit, register } = useMovieForm();
+  const { 
+    errors, isUpdate, submitError, handleSubmit, onSubmit, register 
+  } = useMovieForm();
   const { genres } = useGetAllGenres();
 
   return(
@@ -57,7 +59,7 @@ export default function AddMovie(){
           value={isUpdate ? 'Actualizar' : 'Añadir' }
         />
       </form>
-
+      { submitError && <SubmitError msg={submitError.message}/> }
     </section>
   );
 }

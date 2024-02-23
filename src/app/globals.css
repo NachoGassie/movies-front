@@ -95,6 +95,9 @@ button{
   color: var(--main-color);
   font-weight: 800;
 }
+.errorText.red{
+  color: var(--main-red);
+}
 .notFoundTxt{
   align-self: center;
   color:var(--main-color);

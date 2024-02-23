@@ -4,7 +4,7 @@ export const StatusCode = {
   Created: 201,
   BadRequest: 400,
   Unauthorized: 401,
-  NotFount: 404,
+  NotFound: 404,
   InternalError: 500,
   ServiceUnavailable: 503,
 }

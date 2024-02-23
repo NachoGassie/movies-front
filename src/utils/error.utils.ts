@@ -7,7 +7,7 @@ const zodErrorByPath: { [key: string]: string } = {
   idGenero: "Idgen debe ser un número entero positivo",
 }
 
-export function handleError (error: Error, ): string{
+export function handleError (error: Error): string{
   if (error instanceof ZodError) return zodError(error.issues);
 
   return error.message;

@@ -7,15 +7,10 @@ import { FaEyeSlash as Hidden, FaEye as Showed } from "react-icons/fa";
 import styles from './login.module.css';
 
 export default function Login(){
+  
   const { 
-    errors, 
-    isPending, 
-    submitError,
-    handleSubmit, 
-    onSubmit, 
-    register, 
+    errors, isPending, submitError, handleSubmit, onSubmit, register, 
   } = useLoginForm();
-
   const [hidePW, setHidePW] = useState(true);
 
   const EyeIcon = () => (

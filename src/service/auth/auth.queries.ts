@@ -8,7 +8,9 @@ export async function loginQuery(user: UserLoginReq): Promise<string>{
     headers: { "Content-Type": "application/json" },
   });
 
-  if (res.status === StatusCode.Unauthorized) {
+  const { Unauthorized, BadRequest } = StatusCode;
+
+  if (res.status === Unauthorized || res.status === BadRequest) {
     throw new Error('email y/o contraseña invalido/s');
   }
 
