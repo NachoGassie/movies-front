@@ -35,7 +35,9 @@ export default function NavLink({ toggleMenu, showMenu }: Props){
       </li>
 
       <li>
-        <Link href='/'>Inicio</Link>
+        <Link href='/'>
+          <span>Inicio</span>
+        </Link>
       </li>
 
       {

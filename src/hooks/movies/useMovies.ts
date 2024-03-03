@@ -44,7 +44,9 @@ export function useGetAllMovies(){
     refetchOnWindowFocus: false, 
   });
 
-  if (error) { throw new Error(error.message) }; 
+  if (error) {
+    throw new Error(handleError(error as Error)) 
+  }; 
   const movies = data?.pages.flatMap(page => page.movies);
 
   return { movies, isLoading, hasNextPage, fetchNextPage }

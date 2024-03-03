@@ -5,10 +5,7 @@ import { useGetAllMovies } from "@/hooks";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const { 
-    movies,
-    isLoading,
-  } = useGetAllMovies();
+  const { movies, isLoading } = useGetAllMovies();
 
   if (isLoading) return <Loader />
 

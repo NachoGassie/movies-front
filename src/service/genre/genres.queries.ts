@@ -1,21 +1,28 @@
 import { genresAdapter } from "@/adapter";
+import axios from "@/axiosClone/axiosQueries";
 import { BaseGenreUrl } from "@/constants";
 import { Genre } from "@/model";
+import { GetAllGenresResp } from "@/model/genre/genreDto.model";
 import { handleError } from "@/utils";
-import { createOne, deleteOne, updateOne } from "../defaultQueries";
 
 export async function getAllGenres(){
-  const res = await fetch(BaseGenreUrl);
-  const json = await res.json();
-  const genres = genresAdapter(json.genres);
+  try {
+    const genres = await axios.get<GetAllGenresResp>(
+      BaseGenreUrl, { transformResponse: (({ genres }) => genresAdapter(genres)) }
+    );
+    return genres;
+  } catch (error) {
+    throw new Error(handleError(error as Error)); 
+  }
 
-  return genres;
 }
 
 export async function createGenre(genre: string, token: string){
   try {
     const formData = getGenreFormData(genre);
-    createOne(BaseGenreUrl, formData, token);
+    axios.post(BaseGenreUrl, formData, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   } catch (error) {
     throw new Error(handleError(error as Error)); 
   }
@@ -24,7 +31,9 @@ export async function updateGenre(genre: Genre, token: string){
   const url = `${BaseGenreUrl}/${genre.id_genero}`;
   try {
     const formData = getGenreFormData(genre.genero);
-    const res = await updateOne(url, formData, token);
+    axios.put(BaseGenreUrl, formData, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   } catch (error) {
     throw new Error(handleError(error as Error)); 
   }
@@ -39,7 +48,9 @@ function getGenreFormData(genre: string){
 export async function deleteGenre(genreId: number, token: string){
   const url = `${BaseGenreUrl}/${genreId}`;
   try {
-    await deleteOne(url, token);
+    axios.remove(BaseGenreUrl, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   } catch (error) {
     throw new Error(handleError(error as Error)); 
   }
