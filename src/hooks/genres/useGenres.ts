@@ -1,6 +1,6 @@
 'use client'
 
-import { Genre } from "@/model";
+import { AdaptedGenre } from "@/model";
 import { createGenre, deleteGenre, getAllGenres, updateGenre } from "@/service";
 import { useAuthStore } from "@/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -19,29 +19,21 @@ export function useGetAllGenres(){
   }
 }
 
-export function useCreateGenre(){
+export function useMutateGenre(isUpdate: boolean){
   const token = useStore(useAuthStore, (state) => state.token);
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (genre: string) => createGenre(genre, token),
+    mutationFn: (genre: AdaptedGenre) => {
+      if (isUpdate) return updateGenre(genre, token)
+      return createGenre(genre, token)
+    },
 
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['genres'] });
     },
-  });
-}
 
-export function useUpdateGenre(){
-  const token = useStore(useAuthStore, (state) => state.token);
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (genre: Genre) => updateGenre(genre, token),
-
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['genres'] });
-    },
+    onError: (error) => { throw new Error(error.message) },
   });
 }
 

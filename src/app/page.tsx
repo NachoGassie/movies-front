@@ -3,8 +3,9 @@
 import { Loader, Movie, Order, Pagination, Sort } from "@/components";
 import { useGetAllMovies } from "@/hooks";
 import styles from "./page.module.css";
+import withAuth from "@/components/authComponent";
 
-export default function Home() {
+function Home() {
   const { movies, isLoading } = useGetAllMovies();
 
   if (isLoading) return <Loader />
@@ -40,3 +41,6 @@ export default function Home() {
     </>
   );
 }
+
+export default withAuth(Home);
+// export default Home;

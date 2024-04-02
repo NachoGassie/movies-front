@@ -1,6 +1,8 @@
-export { default as DeleteGenre } from './deleteGenre/deleteGenre';
-export { default as DeleteMovie } from './deleteMovie/deleteMovie';
+export { default as DeleteGenre } from './modalWindows/deleteGenre/deleteGenre';
+export { default as DeleteMovie } from './modalWindows/deleteMovie/deleteMovie';
 export { default as ErrorTxt} from './error/errorTxt';
+export { default as EyeIcon} from './eyeIcon/eyeIcon';
+export { default as GenreForm} from './modalWindows/genreForm/genreForm';
 export { default as Header } from './header/header';
 export { default as Links } from './header/components/links';
 export { default as Loader } from './loader/loader';

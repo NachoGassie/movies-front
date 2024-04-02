@@ -5,7 +5,7 @@ import { AdaptedGenre } from "@/model";
 import { useModalStore } from "@/store/useModal";
 import { useEffect } from "react";
 import DeleteCard from "../deleteCard/deleteCard.modal";
-import ErrorTxt from "../error/errorTxt";
+import ErrorTxt from "../../error/errorTxt";
 
 interface Props {
   genreToDelete: AdaptedGenre;

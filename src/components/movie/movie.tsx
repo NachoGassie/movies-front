@@ -2,14 +2,13 @@
 
 import MovieBoxBtn from "@/components/button/movieBox.btn";
 import { AdaptedMovie } from "@/model/movie/movie.model";
-import { useAuthStore, useGenreStore } from "@/store";
+import { useAuthStore } from "@/store";
 import { useMoviesStore } from "@/store/movies/movies.store";
+import { useModalStore } from "@/store/useModal";
 import { useRouter } from 'next/navigation';
 import { useStore } from "zustand";
-
-import styles from './movie.module.css';
-import { useModalStore } from "@/store/useModal";
 import { DeleteMovie, MovieModal } from "..";
+import styles from './movie.module.css';
 
 interface Props {
   movie: AdaptedMovie;

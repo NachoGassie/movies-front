@@ -1,23 +1,16 @@
 'use client'
 
-import { HookFormInput, SubmitError } from "@/components";
+import { EyeIcon, HookFormInput, SubmitError } from "@/components";
 import { useLoginForm } from "@/hooks";
 import { useState } from "react";
-import { FaEyeSlash as Hidden, FaEye as Showed } from "react-icons/fa";
-import styles from './login.module.css';
+import withAuth from "@/components/authComponent";
 
-export default function Login(){
+function Login(){
   
   const { 
     errors, isPending, submitError, handleSubmit, onSubmit, register, 
   } = useLoginForm();
   const [hidePW, setHidePW] = useState(true);
-
-  const EyeIcon = () => (
-    <span onClick={() => setHidePW(!hidePW)} className={styles.passwordEye}>
-      { hidePW ? <Hidden /> : <Showed /> }
-    </span>
-  );
 
   return (
     <section className='formContainer'>
@@ -32,7 +25,7 @@ export default function Login(){
           errors={errors} 
           register={register}
         >
-          <EyeIcon/>
+          <EyeIcon hidePW={hidePW} setHidePW={setHidePW}/>
         </HookFormInput>
 
         <input 
@@ -46,3 +39,6 @@ export default function Login(){
     </section>
   );
 }
+
+export default withAuth(Login);
+// export default Login;

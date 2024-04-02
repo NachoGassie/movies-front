@@ -64,16 +64,10 @@
     text-transform: capitalize;
     color: var(--main-color);
 }
-.menuItemDelete{
-    /* color: #000; */
+.menuItemFn{
     color: var(--main-color);
     cursor: pointer;
 }
-.menuItemDelete:hover{
+.menuItemFn:hover{
     transform: scale(1.2);
-}
-.menuItem span:hover{
-    transform: scale(1.2);
-    cursor: pointer;
-    color: var(--main-color-dark);
 }

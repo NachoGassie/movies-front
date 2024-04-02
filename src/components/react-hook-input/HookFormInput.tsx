@@ -1,9 +1,10 @@
 'use client'
 import { HTMLInputTypeAttribute } from "react";
 import { FieldErrors, FieldValues, Path, UseFormRegister } from "react-hook-form";
+import { ErrorTxt } from "..";
 
 interface InputProps<T extends FieldValues>{
-  label: string;
+  label?: string;
   field: Path<T>;
   type?: HTMLInputTypeAttribute;
   errors: FieldErrors<T>;
@@ -16,12 +17,13 @@ const HookFormInput = <T extends FieldValues>({
 }: InputProps<T>) => {
   return(
     <div className='inputContainer'>
-      <label>{label}</label>
+      {label && <label>{label}</label>}
+      
       <input {...register(field)} type={type} className='mainInput'/>
 
       { children }
-      
-      {errors[field] && <div className="errorTxt">{errors[field]?.message?.toString()}</div>}
+    
+      {errors[field] && <ErrorTxt msg={errors[field]?.message?.toString() ?? ''}/>}
     </div>
   );
 };

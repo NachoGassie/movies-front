@@ -1,12 +1,12 @@
-import AxiosErrorClone from "@/axiosClone/axiosError";
 import { ErrorStatusCode, abortError } from "@/constants";
 import { zodErrorByPath } from "@/schemas";
+import { AxiosError } from "axios-clone";
 import { ZodError, ZodIssue } from "zod";
 
 export function handleError (error: Error): string{
   if (error.name === abortError) return 'Tiempo de espera excedido';
   if (error instanceof ZodError) return zodError(error.issues);
-  if (error instanceof AxiosErrorClone) return error.response.data.error.message
+  if (error instanceof AxiosError) return error.response.data.error.message
 
   let status = getStatus(error);
 
@@ -18,13 +18,16 @@ export function handleError (error: Error): string{
   return error.message;
 }
 
-function handleErrorByStatus(status: number){
+function handleErrorByStatus(status: number): string | undefined{
   if (status === ErrorStatusCode.ServiceUnavailable) 
     return 'No es posible mostrar las peliculas. Intente reconectarse más tarde.';
 
   if (status === ErrorStatusCode.BadRequest) 
     return 'Solicitud Erronea';
-  
+
+  if(status === ErrorStatusCode.Unauthorized){
+    return 'Usuario invalido'
+  }
 }
 
 function zodError(issues: ZodIssue[]): string{
@@ -36,8 +39,7 @@ function zodError(issues: ZodIssue[]): string{
   return msg;
 }
 
-function getStatus(error: Error): number | null{
-  if (error instanceof AxiosErrorClone) return error.response.status;
+function getStatus(error: Error): number | undefined{
+  if (error instanceof AxiosError) return error.response.status;
   if ('status' in error) return error.status as number;
-  return null;
 }

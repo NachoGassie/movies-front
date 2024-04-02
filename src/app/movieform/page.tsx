@@ -1,10 +1,11 @@
 'use client'
 
 import { HookFormInput, SubmitError } from "@/components";
+import withAuth from "@/components/authComponent";
 import { useGetAllGenres } from "@/hooks";
 import useMovieForm from "@/hooks/movies/useMovieForm";
 
-export default function AddMovie(){
+function AddMovie(){
 
   const { 
     errors, isUpdate, submitError, handleSubmit, onSubmit, register 
@@ -32,7 +33,7 @@ export default function AddMovie(){
           <select {...register("idGenero")} className='mainSelect'>
             <optgroup label="Seleccione un genero">
               {
-                genres.map(genre => (
+                (genres as any).map((genre: any ) => (
                   <option key={genre.idGenero} value={genre.idGenero}>
                     {genre.genero}
                   </option>
@@ -63,3 +64,6 @@ export default function AddMovie(){
     </section>
   );
 }
+
+export default withAuth(AddMovie);
+// export default AddMovie;

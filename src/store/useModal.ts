@@ -21,11 +21,11 @@ export const useModalStore = create<State & Action>()((set) => ({
  ...initialState,
 
   closeModal: () => set({showModal: false}),
-  setComponent: (component: JSX.Element, timeOut?: number) => {
+  setComponent: (component: JSX.Element) => {
     set({
       component,
       showModal: true,
-      timeOut,
+      // timeOut,
     })
   },
   clearComponent: () => set(initialState)

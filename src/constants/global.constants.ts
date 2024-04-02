@@ -1,5 +1,8 @@
 export const BaseUrl = 'http://localhost:3040/api/v1';
 
+export const sessionOutUrl = ['/login', '/signup'];
+export const sessionInUrl = ['/movieform'];
+
 export const abortError = 'AbortError';
 
 export const ErrorStatusCode = {
@@ -11,6 +14,7 @@ export const ErrorStatusCode = {
 }
 
 export const OKStatusCode = {
+  OK: 200,
   Created: 201,
 }
 

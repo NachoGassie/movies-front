@@ -1,12 +1,13 @@
 'use client'
-import { DeleteGenre } from '@/components';
+import { DeleteGenre, GenreForm } from '@/components';
 import { defaultIdGenero } from '@/constants/movie.constants';
 import { useGetAllGenres, useMovieQueries } from '@/hooks';
 import useOutClick from '@/hooks/global/useOutClick';
 import { AdaptedGenre } from '@/model';
 import { useAuthStore, useModalStore, useStore } from '@/store';
-import { MdDeleteForever } from "react-icons/md";
+import { MdOutlineAddBox } from "react-icons/md";
 import styles from '../header.module.css';
+import GenresSubMenu from './genresSubMenu';
 
 interface Props {
   toggleMenu: () => void;
@@ -25,8 +26,18 @@ export default function Menu({ toggleMenu }: Props){
     toggleMenu();
   }
 
+  const addGenre = () => {
+    setComponent(<GenreForm />);
+    toggleMenu();
+  }
+
+  const updateGenre = (genre: AdaptedGenre) => {
+    setComponent(<GenreForm genre={genre}/>);
+    toggleMenu();
+  }
+
   const deleteGenre = (genre: AdaptedGenre) =>{ 
-    setComponent(<DeleteGenre genreToDelete={genre}/>)
+    setComponent(<DeleteGenre genreToDelete={genre}/>);
     toggleMenu();
   }
   
@@ -37,27 +48,24 @@ export default function Menu({ toggleMenu }: Props){
 
         <li onClick={() => getMovies(defaultIdGenero)} className={styles.menuItem}>
           <span>All</span>
+          {
+            isLogged && 
+            <MdOutlineAddBox
+              title='agregar'
+              className={styles.menuItemFn}
+              onClick={() => addGenre()} 
+            />
+          }
         </li>
-        {
-          genres.map(genre => (
-            <li 
-              className={styles.menuItem}
-              key={genre.idGenero}
-            >
-              <span onClick={() => getMovies(genre.idGenero)}>
-                {genre.genero}
-              </span>
 
-              {
-                isLogged &&
-                <MdDeleteForever 
-                  onClick={() => deleteGenre(genre)}
-                  className={styles.menuItemDelete}
-                />
-              }
-            </li>
-          ))
-        }
+        <GenresSubMenu
+          genres={genres}
+          isLogged={isLogged}
+          getMovies={getMovies}
+          updateGenre={updateGenre}
+          deleteGenre={deleteGenre}
+        />
+        
       </ul>
 
     </div>

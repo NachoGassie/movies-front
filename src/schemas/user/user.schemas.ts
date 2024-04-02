@@ -14,6 +14,16 @@ export const fullUserSchema = z.object({
 });
 
 export const UserLoginReqSchema = fullUserSchema.omit({ idUser: true });
+
+export const NewUserSignUp = fullUserSchema.extend({
+  repeatPassword: z
+    .string(basicError("La contraseña", "string"))
+    .min(5, stringLenghtError("La contraseña", 5)),
+}).refine((data) => data.password === data.repeatPassword, {
+  message: "Las contraseñas deben ser iguales",
+  path: ["repeatPassword"],
+});
+
 export const userResponseSchema = fullUserSchema.omit({ password: true });
 
 export const updateUserSchema = UserLoginReqSchema.partial().refine(

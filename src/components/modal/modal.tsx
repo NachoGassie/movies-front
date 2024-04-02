@@ -5,6 +5,11 @@ import { AiFillCloseCircle as CloseBtn } from 'react-icons/ai';
 import styles from './modal.module.css';
 import { useEffect } from 'react';
 
+interface Props{
+  component?: JSX.Element; 
+  // showModal: boolean; 
+  timeOut?: number; // ok as props
+}
 
 export default function Modal(){
 
@@ -24,8 +29,8 @@ export default function Modal(){
   },[showModal]);
 
   useEffect(() => {
-    if(timeOut)
-      setTimeout(() => closeModal(), 3000);
+    // if (component)  openModal();
+    if(timeOut) setTimeout(() => closeModal(), 3000);
   },[]);
 
   return(

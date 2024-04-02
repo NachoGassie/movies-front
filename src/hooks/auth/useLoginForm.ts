@@ -12,7 +12,7 @@ export default function useLoginForm(){
     register,
     handleSubmit,
   } = useForm<UserLoginReq>({
-    resolver: zodResolver(UserLoginReqSchema)
+    resolver: zodResolver(UserLoginReqSchema),
   });
 
   const { mutate: getToken, isPending, error: submitError } = useGetToken();
