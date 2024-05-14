@@ -27,7 +27,7 @@ export default function Movie({ movie }: Props){
   }
   const updateMovie = () => {
     setMovieToUpdate(movie);
-    router.push('/addmovie');
+    router.push('/movieform');
   }
   const deleteMovie = () => {
     setComponent(<DeleteMovie movieToDelete={movie}/>)

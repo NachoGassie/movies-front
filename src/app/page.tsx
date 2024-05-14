@@ -3,7 +3,6 @@
 import { Loader, Movie, Order, Pagination, Sort } from "@/components";
 import { useGetAllMovies } from "@/hooks";
 import styles from "./page.module.css";
-import withAuth from "@/components/authComponent";
 
 function Home() {
   const { movies, isLoading } = useGetAllMovies();
