@@ -68,7 +68,7 @@ export function useMutateMovie(isUpdate: boolean){
       router.push('/');
     },
 
-    onError: (error) => { throw new Error(error.message) },
+    onError: (error) => { return handleError(error) },
   });
 }
 
@@ -83,8 +83,7 @@ export function useDeleteMovie(){
       await queryClient.invalidateQueries({ queryKey: ['movies'] });
     },
     onError: (error) => { 
-      // throw new Error(error.message);
-      console.log('error') 
+      return handleError(error)
     },
   });
 }

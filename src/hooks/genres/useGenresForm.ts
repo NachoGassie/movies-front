@@ -20,8 +20,6 @@ export default function useMovieForm(genreToUpdate?: AdaptedGenre){
 
   const onSubmit: SubmitHandler<AdaptedGenre> = (data) => {
     mutate(data);
-    console.log(isSuccess);
-    console.log(isPending);
     if (isSuccess) closeModal();
   };
 

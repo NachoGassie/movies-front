@@ -39,10 +39,5 @@ export function useUpdateUser(){
   
   return useMutation({
     mutationFn: (user: UserLoginReq) => updateUser(idUser, user, token),
-
-    // onSuccess: (token) => {
-    //   saveToken(token);
-    //   router.push('/');
-    // }
   });
 }

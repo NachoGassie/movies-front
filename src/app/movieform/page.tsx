@@ -1,7 +1,6 @@
 'use client'
 
 import { HookFormInput, SubmitError } from "@/components";
-import withAuth from "@/components/authComponent";
 import { useGetAllGenres } from "@/hooks";
 import useMovieForm from "@/hooks/movies/useMovieForm";
 
@@ -65,5 +64,4 @@ function AddMovie(){
   );
 }
 
-export default withAuth(AddMovie);
-// export default AddMovie;
+export default AddMovie;

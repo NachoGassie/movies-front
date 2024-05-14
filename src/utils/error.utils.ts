@@ -6,7 +6,11 @@ import { ZodError, ZodIssue } from "zod";
 export function handleError (error: Error): string{
   if (error.name === abortError) return 'Tiempo de espera excedido';
   if (error instanceof ZodError) return zodError(error.issues);
-  if (error instanceof AxiosError) return error.response.data.error.message
+  if (error instanceof AxiosError) {
+    const axiosError = error.response.data.error.message;
+    if (typeof axiosError === 'string') return axiosError;
+    if (Array.isArray(axiosError)) return axiosError[0].message;
+  }
 
   let status = getStatus(error);
 

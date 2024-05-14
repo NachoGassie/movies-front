@@ -3,7 +3,6 @@
 import { EyeIcon, HookFormInput, SubmitError } from "@/components";
 import { useLoginForm } from "@/hooks";
 import { useState } from "react";
-import withAuth from "@/components/authComponent";
 
 function Login(){
   
@@ -40,5 +39,4 @@ function Login(){
   );
 }
 
-export default withAuth(Login);
-// export default Login;
+export default Login;

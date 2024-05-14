@@ -3,6 +3,7 @@
 import { AdaptedGenre } from "@/model";
 import { createGenre, deleteGenre, getAllGenres, updateGenre } from "@/service";
 import { useAuthStore } from "@/store";
+import { handleError } from "@/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useStore } from "zustand";
 
@@ -33,7 +34,7 @@ export function useMutateGenre(isUpdate: boolean){
       await queryClient.invalidateQueries({ queryKey: ['genres'] });
     },
 
-    onError: (error) => { throw new Error(error.message) },
+    onError: (error) => { return handleError(error) },
   });
 }
 
@@ -46,6 +47,7 @@ export function useDeleteGenre(){
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['genres'] });
     },
+    onError: (error) => { return handleError(error) },
   });
 
   return { mutateAsync, isError };
